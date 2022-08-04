@@ -1,0 +1,78 @@
+
+ 
+<html>
+    <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+      <title>ArcGIS API for JavaScript Tutorials: Display a map</title>
+  
+      <style>
+        html,
+        body,
+        #viewDiv {
+          padding: 0;
+          margin: 0;
+          height: 100%;
+          width: 100%;
+        }
+      </style>
+  
+      <link rel="stylesheet" href="https://js.arcgis.com/4.24/esri/themes/light/main.css">
+      <script src="https://js.arcgis.com/4.24/"></script>
+  
+      <script>
+        require([
+          "esri/config",
+   "esri/WebMap", "esri/widgets/LayerList",    
+          "esri/views/MapView",
+          ], function (esriConfig, WebMap, LayerList,  MapView) {
+           
+      esriConfig.apiKey = "GoGKxe3MmTbA42WcMpJBqJXTle-4xkkKd7q-oAc9uViOumZSbX51zVRWEgR9kw3xkDKixLzpoZJk2rT84BKuuO7AaVig06lwx3n3NswSTDDAXHs5fZo52Dz-mi3LXRTTAqp-JQMbgTD2s_wK83-_Cg..";
+  
+          const webmap = new WebMap({
+            portalItem: {
+            id: "ff56da8b138f483dba46aa8da1987358"
+          }
+          });
+          
+          const view = new MapView({
+            map: webmap,
+            center: [-73.935242, 40.730610],
+            zoom: 10,
+            container: "viewDiv"
+          })
+          
+  
+          view.when(() => {
+            const layerList = new LayerList({
+              view: view,
+              listItemCreatedFunction: (event) => {
+              const item = event.item;
+              if (item.layer.type != "group") {
+                // don't show legend twice
+                item.panel = {
+                  content: "legend",
+                  open: true,
+                };
+              }
+            }
+          });
+          view.ui.add(layerList, "top-right");
+            });
+      
+  
+        
+          
+          
+          
+         
+       
+  
+        });
+      </script>
+  
+    </head>
+    <body class="calcite">
+      <div id="viewDiv"></div>
+    </body>
+  </html>
